@@ -1,0 +1,25 @@
+# Node.js
+node_modules/
+package-lock.json
+
+# Entorno de desarrollo
+.env
+.DS_Store
+
+# WhatsApp Web.js (para evitar subir datos de sesión)
+.wwebjs_auth/
+.wwebjs_cache/
+
+# Logs y archivos temporales
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+src/logs/
+
+# Archivos de editor
+.vscode/
+.idea/
+*.swp
+*.swo
