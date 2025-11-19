@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full WhatsApp Bots - Diagrama de Flujo</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.2em;
+        }
+
+        .flow-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .flow-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 15px 0;
+            width: 100%;
+            position: relative;
+        }
+
+        .flow-box {
+            background: linear-gradient(145deg, #f0f4f8, #d9e2ec);
+            border: 2px solid #4a90e2;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 10px;
+            text-align: center;
+            font-weight: bold;
+            color: #2c3e50;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .flow-box:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .start-box {
+            background: linear-gradient(145deg, #4CAF50, #45a049);
+            color: white;
+            border-color: #4CAF50;
+            min-width: 200px;
+        }
+
+        .process-box {
+            background: linear-gradient(145deg, #2196F3, #1976D2);
+            color: white;
+            border-color: #2196F3;
+            min-width: 180px;
+        }
+
+        .decision-box {
+            background: linear-gradient(145deg, #FF9800, #F57C00);
+            color: white;
+            border-color: #FF9800;
+            min-width: 180px;
+            position: relative;
+        }
+
+        .ai-box {
+            background: linear-gradient(145deg, #9C27B0, #7B1FA2);
+            color: white;
+            border-color: #9C27B0;
+            min-width: 180px;
+        }
+
+        .database-box {
+            background: linear-gradient(145deg, #607D8B, #455A64);
+            color: white;
+            border-color: #607D8B;
+            min-width: 180px;
+        }
+
+        .external-box {
+            background: linear-gradient(145deg, #795548, #5D4037);
+            color: white;
+            border-color: #795548;
+            min-width: 180px;
+        }
+
+        .end-box {
+            background: linear-gradient(145deg, #F44336, #D32F2F);
+            color: white;
+            border-color: #F44336;
+            min-width: 200px;
+        }
+
+        .arrow {
+            font-size: 24px;
+            color: #4a90e2;
+            margin: 0 10px;
+            font-weight: bold;
+            z-index: 1;
+        }
+
+        .arrow-down {
+            font-size: 30px;
+            color: #4a90e2;
+            margin: 10px 0;
+        }
+
+        .parallel-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .parallel-column {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 20px;
+        }
+
+        .legend {
+            margin-top: 40px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 1px solid #dee2e6;
+        }
+
+        .legend h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .legend-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        .legend-box {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            margin-right: 8px;
+            border: 2px solid;
+        }
+
+        .description {
+            margin-top: 30px;
+            padding: 20px;
+            background: #e8f4fd;
+            border-radius: 10px;
+            border-left: 4px solid #2196F3;
+        }
+
+        .phase-title {
+            font-size: 1.3em;
+            color: #2196F3;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #2196F3;
+            padding-bottom: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .flow-row {
+                flex-direction: column;
+            }
+
+            .parallel-container {
+                flex-direction: column;
+            }
+
+            .parallel-column {
+                margin: 10px 0;
+            }
+
+            .flow-box {
+                min-width: 150px;
+                margin: 5px;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 Full WhatsApp Bots</h1>
+        <p class="subtitle">Diagrama de Flujo del Sistema de Automatización de WhatsApp</p>
+
+        <div class="flow-container">
+            <!-- FASE 1: INICIALIZACIÓN -->
+            <div class="phase-title">FASE 1: INICIALIZACIÓN DEL SISTEMA</div>
+
+            <div class="flow-row">
+                <div class="flow-box start-box">
+                    🚀<br>Sistema Inicia<br>(index.js)
+                </div>
+                <span class="arrow">→</span>
+                <div class="flow-box process-box">
+                    📊<br>Conexión MongoDB<br>(config/db.js)
+                </div>
+                <span class="arrow">→</span>
+                <div class="flow-box process-box">
+                    🔧<br>Cargar Configuración<br>Bots Activos
+                </div>
+            </div>
+
+            <div class="flow-row">
+                <span class="arrow-down">↓</span>
+            </div>
+
+            <div class="flow-row">
+                <div class="flow-box process-box">
+                    📱<br>Iniciar Clientes<br>WhatsApp Web
+                </div>
+                <span class="arrow">→</span>
+                <div class="flow-box process-box">
+                    🤖<br>Configurar OpenAI API
+                </div>
+                <span class="arrow">→</span>
+                <div class="flow-box process-box">
+                    ⚡<br>Levantar Servidor<br>Express + API REST
+                </div>
+            </div>
+
+            <!-- FASE 2: PROCESAMIENTO DE MENSAJES -->
+            <div class="phase-title">FASE 2: PROCESAMIENTO DE MENSAJES ENTRANTE</div>
+
+            <div class="flow-row">
+                <div class="flow-box start-box">
+                    💬<br>Mensaje Recibido<br>WhatsApp
+                </div>
+                <span class="arrow">→</span>
+                <div class="flow-box decision-box">
+                    ❓<br>¿Bot Disponible?
+                </div>
+            </div>
+
+            <div class="flow-row">
+                <div class="flow-box process-box">SÍ</div>
+                <span class="arrow">→</span>
+                <div class="flow-box process-box">
+                    🔍<br>Extraer Info<br>Usuario + Chat
+                </div>
+                <span class="arrow">→</span>
+                <div class="flow-box decision-box">
+                    ❓<br>¿Conversación<br>Existente?
+                </div>
+            </div>
+
+            <div class="flow-row">
+                <span class="arrow-down">↓</span>
+            </div>
+
+            <div class="parallel-container">
+                <div class="parallel-column">
+                    <div class="flow-box process-box">NUEVA</div>
+                    <span class="arrow-down">↓</span>
+                    <div class="flow-box process-box">
+                        📝<br>Crear Nueva<br>Conversación
+                    </div>
+                </div>
+                <div class="parallel-column">
+                    <div class="flow-box process-box">EXISTENTE</div>
+                    <span class="arrow-down">↓</span>
+                    <div class="flow-box process-box">
+                        📂<br>Cargar Historial<br>Conversacional
+                    </div>
+                </div>
+            </div>
+
+            <!-- FASE 3: PROCESAMIENTO CON IA -->
+            <div class="phase-title">FASE 3: PROCESAMIENTO INTELIGENTE</div>
+
+            <div class="flow-row">
+                <div class="flow-box ai-box">
+                    🧠<br>Cargar Contexto<br>(últimos 20 mensajes)
+                </div>
+                <span class="arrow">→</span>
+                <div class="flow-box ai-box">
+                    🔮<br>Llamada OpenAI API<br>(con retry logic)
+                </div>
+                <span class="arrow">→</span>
+                <div class="flow-box ai-box">
+                    💭<br>Procesar Respuesta<br>IA
+                </div>
+            </div>
+
+            <div class="flow-row">
+                <span class="arrow-down">↓</span>
+            </div>
+
+            <div class="flow-row">
+                <div class="flow-box decision-box">
+                    ❓<br>¿Aplicar Flujo<br>Predefinido?
+                </div>
+            </div>
+
+            <!-- FASE 4: ACCIONES Y ALMACENAMIENTO -->
+            <div class="phase-title">FASE 4: EJECUCIÓN DE ACCIONES</div>
+
+            <div class="parallel-container">
+                <div class="parallel-column">
+                    <div class="flow-box process-box">
+                        📤<br>Enviar Respuesta<br>WhatsApp
+                    </div>
+                    <span class="arrow-down">↓</span>
+                    <div class="flow-box database-box">
+                        💾<br>Guardar Mensajes<br>MongoDB
+                    </div>
+                </div>
+
+                <div class="parallel-column">
+                    <div class="flow-box external-box">
+                        📅<br>Agendar Cita<br>(Google Calendar)
+                    </div>
+                    <span class="arrow-down">↓</span>
+                    <div class="flow-box external-box">
+                        📋<br>Actualizar Lead<br>(Airtable CRM)
+                    </div>
+                </div>
+
+                <div class="parallel-column">
+                    <div class="flow-box process-box">
+                        ⏰<br>Programar<br>Recordatorios
+                    </div>
+                    <span class="arrow-down">↓</span>
+                    <div class="flow-box process-box">
+                        🔄<br>Configurar<br>Reintentos
+                    </div>
+                </div>
+            </div>
+
+            <!-- FASE 5: MONITOREO -->
+            <div class="phase-title">FASE 5: MONITOREO Y GESTIÓN</div>
+
+            <div class="flow-row">
+                <div class="flow-box process-box">
+                    📊<br>Actualizar Métricas<br>Dashboard
+                </div>
+                <span class="arrow">→</span>
+                <div class="flow-box database-box">
+                    🗂️<br>Logging Sistemático<br>(Winston)
+                </div>
+                <span class="arrow">→</span>
+                <div class="flow-box process-box">
+                    🔔<br>Notificaciones<br>(Email/Webhook)
+                </div>
+            </div>
+
+            <div class="flow-row">
+                <span class="arrow-down">↓</span>
+            </div>
+
+            <div class="flow-row">
+                <div class="flow-box end-box">
+                    ✅<br>Proceso Completado<br>Esperar Siguiente Mensaje
+                </div>
+            </div>
+
+            <!-- GESTIÓN DE COLAS -->
+            <div class="phase-title">SISTEMA DE GESTIÓN DE COLAS CONCURRENTES</div>
+
+            <div class="flow-row">
+                <div class="flow-box process-box">
+                    🔄<br>Queue Manager<br>(Máx 3 bots)
+                </div>
+                <span class="arrow">→</span>
+                <div class="flow-box decision-box">
+                    ❓<br>¿Disponible?
+                </div>
+                <span class="arrow">→</span>
+                <div class="flow-box process-box">
+                    ⏳<br>Encolar Mensaje<br>Procesamiento
+                </div>
+            </div>
+
+            <div class="flow-row">
+                <span class="arrow-down">↓</span>
+            </div>
+
+            <div class="flow-row">
+                <div class="flow-box process-box">
+                    🚀<br>Procesamiento<br>Por Lotes
+                </div>
+                <span class="arrow">→</span>
+                <div class="flow-box process-box">
+                    📈<br>Optimización<br>Recursos
+                </div>
+                <span class="arrow">→</span>
+                <div class="flow-box process-box">
+                    🔄<br>Balance de Carga<br>Automático
+                </div>
+            </div>
+        </div>
+
+        <div class="legend">
+            <h3>📖 Leyenda del Diagrama</h3>
+            <div class="legend-items">
+                <div class="legend-item">
+                    <div class="legend-box" style="background: linear-gradient(145deg, #4CAF50, #45a049); border-color: #4CAF50;"></div>
+                    <span>Inicio/Fin</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-box" style="background: linear-gradient(145deg, #2196F3, #1976D2); border-color: #2196F3;"></div>
+                    <span>Proceso</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-box" style="background: linear-gradient(145deg, #FF9800, #F57C00); border-color: #FF9800;"></div>
+                    <span>Decisión</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-box" style="background: linear-gradient(145deg, #9C27B0, #7B1FA2); border-color: #9C27B0;"></div>
+                    <span>Inteligencia Artificial</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-box" style="background: linear-gradient(145deg, #607D8B, #455A64); border-color: #607D8B;"></div>
+                    <span>Base de Datos</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-box" style="background: linear-gradient(145deg, #795548, #5D4037); border-color: #795548;"></div>
+                    <span>Servicio Externo</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="description">
+            <h3>📋 Descripción del Flujo</h3>
+
+            <div><strong>Fase 1 - Inicialización:</strong> El sistema arranca, conecta con MongoDB y carga la configuración de todos los bots activos. Se inicializan los clientes de WhatsApp Web y se configura la API de OpenAI.</div>
+
+            <div><strong>Fase 2 - Recepción:</strong> Cuando llega un mensaje de WhatsApp, el sistema verifica si hay un bot disponible y extrae la información del remitente. Se determina si es una conversación nueva o existente.</div>
+
+            <div><strong>Fase 3 - Procesamiento IA:</strong> Se carga el contexto conversacional (últimos 20 mensajes), se realiza la llamada a OpenAI API con sistema de reintentos, y se procesa la respuesta generada por la IA.</div>
+
+            <div><strong>Fase 4 - Ejecución:</strong> Se envía la respuesta por WhatsApp, se guarda todo en MongoDB, y se ejecutan acciones adicionales como agendar citas en Google Calendar, actualizar leads en Airtable, y programar recordatorios.</div>
+
+            <div><strong>Fase 5 - Monitoreo:</strong> Se actualizan las métricas del dashboard, se registran logs sistemáticos, y se envían notificaciones según configuración.</div>
+
+            <div><strong>Sistema de Colas:</strong> Para manejar múltiples bots concurrentemente, se utiliza un sistema de colas con límite de 3 bots simultáneos, procesamiento por lotes y balance automático de carga.</div>
+        </div>
+    </div>
+
+    <script>
+        // Animación simple al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            const boxes = document.querySelectorAll('.flow-box');
+            boxes.forEach((box, index) => {
+                box.style.opacity = '0';
+                box.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    box.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    box.style.opacity = '1';
+                    box.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>
